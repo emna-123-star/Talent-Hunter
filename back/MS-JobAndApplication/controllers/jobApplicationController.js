@@ -1,30 +1,45 @@
 // controllers/jobApplicationController.js
 
-const JOBApplication = require('../models/jobApplicationModel');
+const JOBApplication = require("../models/jobApplicationModel");
+const upload = require("../config/multerConfig");
 
 // Ajouter une nouvelle application
-exports.addApplication = async (req, res) => {
-  try {
-    const { jobId, applicantEmail, applicantName, cv, phoneNumber, coverLetter } = req.body;
-    const newApplication = new JOBApplication({
-      jobId,
-      applicantEmail,
-      applicantName,
-      cv,
-      phoneNumber,
-      coverLetter,
-    });
-    await newApplication.save();
-    res.status(201).json(newApplication);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
+exports.addApplication = [
+  upload.fields([
+    { name: "cv", maxCount: 1 },
+    { name: "coverLetter", maxCount: 1 },
+  ]), // Pour gérer les deux fichiers
+  async (req, res) => {
+    try {
+      const { jobId, applicantEmail, applicantName, phoneNumber } = req.body;
+      const cv = req.files["cv"][0].filename;
+      const coverLetter = req.files["coverLetter"]
+        ? req.files["coverLetter"][0].filename
+        : "";
+
+      const newApplication = new JOBApplication({
+        jobId,
+        applicantEmail,
+        applicantName,
+        cv,
+        phoneNumber,
+        coverLetter,
+      });
+
+      await newApplication.save();
+      //envoi un mail pour le user
+      //application f job x est bien récu
+      res.status(201).json(newApplication);
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  },
+];
 
 // Obtenir toutes les applications
 exports.getAllApplications = async (req, res) => {
   try {
-    const applications = await JOBApplication.find().populate('jobId');
+    const applications = await JOBApplication.find().populate("jobId");
     res.status(200).json(applications);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -51,7 +66,7 @@ exports.getMyApplications = async (req, res) => {
 exports.getApplicationByJob = async (req, res) => {
   try {
     const { jobId } = req.params;
-    const applications = await JOBApplication.find({ jobId }).populate('jobId');
+    const applications = await JOBApplication.find({ jobId }).populate("jobId");
     res.status(200).json(applications);
   } catch (err) {
     res.status(500).json({ error: err.message });

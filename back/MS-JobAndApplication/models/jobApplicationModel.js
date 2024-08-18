@@ -1,12 +1,11 @@
-
 // models/jobApplicationModel.js
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const jobApplicationSchema = new mongoose.Schema({
   jobId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Job',
+    ref: "Job",
     required: true,
   },
   applicantEmail: {
@@ -30,8 +29,8 @@ const jobApplicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Pending', 'Accepted', 'Rejected'],
-    default: 'Pending',
+    enum: ["Pending", "Accepted", "Rejected"],
+    default: "Pending",
   },
   appliedDate: {
     type: Date,
@@ -39,6 +38,6 @@ const jobApplicationSchema = new mongoose.Schema({
   },
 });
 
-const JOBApplication = mongoose.model('JOBApplication', jobApplicationSchema);
+const JOBApplication = mongoose.model("JOBApplication", jobApplicationSchema);
 
 module.exports = JOBApplication;
