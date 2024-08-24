@@ -10,18 +10,18 @@ import { CoreService } from 'src/app/services/core.service';
       @if(options.theme === 'light') {
       <a href="/">
         <img
-          height="80px"
-          width="250px"
-          src="./assets/images/logos/logo2.png"
-          class="align-middle m-2"
+         
+          width="230px"
+          src="./assets/images/logos/logo1.png"
+          class="align-middle m-1"
           alt="logo"
         />
       </a>
       } @if(options.theme === 'dark') {
       <a href="/">
         <img
-        width="200px"
-          src="./assets/images/logos/logo2.png"
+        width="230px"
+          src="./assets/images/logos/logo1.png"
           class="align-middle m-2"
           alt="logo"
         />
