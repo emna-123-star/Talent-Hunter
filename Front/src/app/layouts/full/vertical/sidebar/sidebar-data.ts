@@ -12,27 +12,27 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Gérer Emplois',
     iconName: 'file-invoice',
-    route: '',
+    route: '/dashboards/jobs',
   },
   {
     displayName: 'Gérer Candidature',
     iconName: 'files',
-    route: '',
+    route: '/dashboards/candidature',
   },
   {
     displayName: 'Gérer Interviews',
     iconName: 'brand-ctemplar',
-    route: '',
+    route: '/dashboards/interviews',
   },
   {
     displayName: 'Match Making',
     iconName: 'mood-smile',
-    route: '',
+    route: '/dashboards/matchmaking',
   },
   {
     displayName: ' Gérer Tests',
     iconName: 'edit',
-    route: '',
+    route: '/dashboards/tests',
   },
   {
     displayName: 'Gérer Profil',

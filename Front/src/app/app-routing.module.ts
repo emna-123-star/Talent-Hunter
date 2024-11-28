@@ -14,6 +14,11 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path: '',
+        redirectTo: '/dashboards/jobs',
+        pathMatch: 'full',
+      },
+      {
         path: 'starter',
         loadChildren: () =>
           import('./pages/pages.module').then((m) => m.PagesModule),
