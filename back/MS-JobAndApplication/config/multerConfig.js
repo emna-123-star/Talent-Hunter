@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// Filtrage des fichiers (optionnel)
+// Filtrage des fichiers 
 const fileFilter = (req, file, cb) => {
   const allowedFileTypes = /jpeg|jpg|png|pdf|doc|docx/;
   const mimeType = allowedFileTypes.test(file.mimetype);

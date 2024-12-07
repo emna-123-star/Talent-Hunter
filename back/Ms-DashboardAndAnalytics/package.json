@@ -1,11 +1,20 @@
 {
   "name": "ms-dashboardandanalytics",
   "version": "1.0.0",
-  "description": "",
+  "description": "Microservice for dashboard and analytics (total users, applications per month, applications by job)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "axios": "^1.4.0",
+    "mongoose": "^8.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
 }
