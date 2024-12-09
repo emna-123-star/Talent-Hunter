@@ -1,1 +1,56 @@
-<p>edit-job works!</p>
+<form #jobForm="ngForm" (ngSubmit)="updateJob(jobForm)">
+    <!-- Job Name -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Job Name</mat-label>
+      <input matInput [(ngModel)]="job.jobName" name="jobName" required />
+    </mat-form-field>
+  
+    <!-- Position -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Position</mat-label>
+      <input matInput [(ngModel)]="job.position" name="position" required />
+    </mat-form-field>
+  
+    <!-- Description -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="job.description" name="description" rows="5" required></textarea>
+    </mat-form-field>
+  
+    <!-- Start Date -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Start Date</mat-label>
+      <input matInput [(ngModel)]="job.startDate" name="startDate" [matDatepicker]="picker" required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  
+    <!-- Deadline -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Deadline</mat-label>
+      <input matInput [(ngModel)]="job.deadline" name="deadline" [matDatepicker]="picker2" required />
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  
+    <!-- Keywords -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Keywords</mat-label>
+      <input matInput [(ngModel)]="job.keywords" name="keywords" required />
+    </mat-form-field>
+  
+    <!-- Requirements -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Requirements</mat-label>
+      <input matInput [(ngModel)]="job.requirements" name="requirements" required />
+    </mat-form-field>
+  
+    <!-- Update Button -->
+   
+
+    <div class="col-sm-12">
+        <button mat-flat-button color="primary" type="submit" [disabled]="!jobForm.valid">Update Job</button>
+        <button mat-flat-button color="warn" class="m-l-8" [routerLink]="['/dashboards/jobs']">Cancel</button>
+      </div>
+  </form>
+  

@@ -1,78 +1,99 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from 'src/app/material.module'; 
-
-export interface productsData {
-  id: number;
-  imagePath: string;
-  uname: string;
-  position: string;
-  productName: string;
-  budget: number;
-  priority: string;
-}
-
-const ELEMENT_DATA: productsData[] = [
-  {
-    id: 1,
-    imagePath: 'assets/images/profile/user-1.jpg',
-    uname: 'Sunil Joshi',
-    position: 'Web Designer',
-    productName: 'Elite Admin',
-    budget: 3.9,
-    priority: 'low'
-  },
-  {
-    id: 2,
-    imagePath: 'assets/images/profile/user-2.jpg',
-    uname: 'Andrew McDownland',
-    position: 'Project Manager',
-    productName: 'Real Homes Theme',
-    budget: 24.5,
-    priority: 'medium'
-  },
-  {
-    id: 3,
-    imagePath: 'assets/images/profile/user-3.jpg',
-    uname: 'Christopher Jamil',
-    position: 'Project Manager',
-    productName: 'MedicalPro Theme',
-    budget: 12.8,
-    priority: 'high'
-  },
-  {
-    id: 4,
-    imagePath: 'assets/images/profile/user-4.jpg',
-    uname: 'Nirav Joshi',
-    position: 'Frontend Engineer',
-    productName: 'Hosting Press HTML',
-    budget: 2.4,
-    priority: 'critical'
-  },
-];
-
-interface month {
-  value: string;
-  viewValue: string;
-}
-
-
+import { MaterialModule } from 'src/app/material.module';
+import { JobService } from 'src/app/services/job.service';
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({
   selector: 'app-list-jobs',
   standalone: true,
-  imports: [MaterialModule, CommonModule , RouterModule],
+  imports: [MaterialModule, CommonModule, RouterModule],
   templateUrl: './list-jobs.component.html',
-  styleUrl: './list-jobs.component.scss'
+  styleUrls: ['./list-jobs.component.scss'],
+ 
 })
-export class ListJobsComponent {
-  displayedColumns: string[] = ['assigned', 'name', 'priority', 'budget'];
-  dataSource = ELEMENT_DATA;
+export class ListJobsComponent implements OnInit {
+  displayedColumns: string[] = ['jobName', 'description', 'position', 'startDate', 'deadline', 'actions'];
+  dataSource: any;
 
-  months: month[] = [
-    { value: 'mar', viewValue: 'March 2023' },
-    { value: 'apr', viewValue: 'April 2023' },
-    { value: 'june', viewValue: 'June 2023' },
-  ];
+  constructor(public jobService: JobService) {}
+
+  ngOnInit(): void {
+    this.loadJobs();
+  }
+
+  loadJobs(): void {
+    this.jobService.getAllJobs().subscribe((data: any) => {
+      console.log("Jobs: ", data);
+      this.dataSource = data;
+    });
+  }
+
+  deleteJob(jobId: any) {
+    // Show a confirmation alert
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this job!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call the delete service if confirmed
+        this.jobService.deleteJob(jobId).subscribe(
+          (response) => {
+            // Show success alert after deletion
+            Swal.fire('Deleted!', 'The job has been deleted.', 'success');
+            // Refresh the job list after deletion
+            this.loadJobs();
+          },
+          (error) => {
+            // Show error alert if deletion fails
+            Swal.fire('Error!', 'There was an error deleting the job. Please try again.', 'error');
+          }
+        );
+      } else {
+        // Show cancellation message if user clicks "Cancel"
+        Swal.fire('Cancelled', 'The job was not deleted.', 'info');
+      }
+    });
+  }
+  editJob(jobId: any): void {
+    console.log('Edit Job:', jobId);
+  }
+
+  viewDetails(jobId: any): void {
+    // Fetch job details based on the jobId
+    this.jobService.getJobById(jobId).subscribe((data: any) => {
+      // Show SweetAlert with job details
+      Swal.fire({
+        title: data.jobName,
+        html: `
+          <p><strong>Position:</strong> ${data.position}</p>
+          <p><strong>Description:</strong> ${data.description}</p>
+          <p><strong>Start Date:</strong> ${this.formatDate(data.startDate)}</p>
+          <p><strong>Deadline:</strong> ${this.formatDate(data.deadline)}</p>
+          <p><strong>Keywords:</strong> ${data.keywords}</p>
+          <p><strong>Requirements:</strong> ${data.requirements}</p>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Close',
+        confirmButtonColor: '#3085d6',
+      });
+    });
+  }
+
+
+
+  formatDate(date: string): string {
+    return date ? new Date(date).toLocaleDateString('en-US') : 'No date available';
+  }
+
+  // Method to format deadline
+  formatDeadline(deadline: string): string {
+    return deadline ? new Date(deadline).toLocaleDateString('en-US') : 'No deadline available';
+  }
 }

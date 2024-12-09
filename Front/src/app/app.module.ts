@@ -24,13 +24,17 @@ import { FilterPipe } from './pipe/filter.pipe';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { DateFormatPipe } from './pipe/date-format.pipe';
+import { TruncateTextPipe } from './pipe/truncate-text.pipe';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 export function HttpLoaderFactory(http: HttpClient): any {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent, BlankComponent, FilterPipe],
+  declarations: [AppComponent, BlankComponent,DateFormatPipe,TruncateTextPipe,FilterPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -49,8 +53,11 @@ export function HttpLoaderFactory(http: HttpClient): any {
     }),
     NgScrollbarModule,
     FullComponent,
+    MatChipsModule,    // Add MatChipsModule here
+    MatIconModule,     // Add MatIconModule if needed
+    MaterialModule,
   ],
-  exports: [TablerIconsModule],
+  exports: [TablerIconsModule], 
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -61,12 +61,12 @@ export const DashboardsRoutes: Routes = [
         },
       },
       {
-        path: 'edit-job',
+        path: 'edit-job/:id',
         component: EditJobComponent,
         data: {
           title: 'Modifier Emplois',
           urls: [
-            { title: 'Job-Genie', url: '/dashboards/edit-job' },
+            { title: 'Job-Genie', url: '/dashboards/edit-job/:id' },
             // { title: 'Liste des Emplois' },
           ],
         },
