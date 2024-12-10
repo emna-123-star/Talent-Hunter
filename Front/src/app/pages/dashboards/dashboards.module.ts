@@ -12,6 +12,7 @@ import { ListInterviewsComponent } from './interviews/list-interviews/list-inter
 import { ListTestsComponent } from './tests/list-tests/list-tests.component';
 import { AddJobComponent } from './jobs/add-job/add-job.component';
 import { EditJobComponent } from './jobs/edit-job/edit-job.component';
+import { AddCandidatureComponent } from './candidature/add-candidature/add-candidature.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { EditJobComponent } from './jobs/edit-job/edit-job.component';
     ListCandidatureComponent,
     ListMatchmakingComponent,
     ListInterviewsComponent,
-    ListTestsComponent
+    ListTestsComponent,
+    AddCandidatureComponent
     
   ],
 })

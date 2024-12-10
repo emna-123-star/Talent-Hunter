@@ -3,6 +3,7 @@ import { CoreService } from 'src/app/services/core.service';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-side-register',
@@ -10,23 +11,37 @@ import { MaterialModule } from '../../../material.module';
   imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
   templateUrl: './side-register.component.html',
 })
+
+
 export class AppSideRegisterComponent {
-  options = this.settings.getOptions();
+  form: FormGroup;
 
-  constructor(private settings: CoreService, private router: Router) { }
-
-  form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-  });
+  constructor(private userService: UserService, private router: Router) {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      role: new FormControl('user'), // Default role as 'user'
+    });
+  }
 
   get f() {
     return this.form.controls;
   }
 
   submit() {
-    // console.log(this.form.value);
-    this.router.navigate(['/dashboards/dashboard1']);
+    if (this.form.valid) {
+      this.userService.registerUser(this.form.value).subscribe(
+        (response) => {
+          console.log('User registered successfully', response);
+          this.router.navigate(['/authentication/side-login']); // Redirect to login page after successful registration
+        },
+        (error) => {
+          console.error('Registration error:', error);
+        }
+      );
+    }
   }
 }
+
+///authentication/side-register

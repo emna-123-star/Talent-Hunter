@@ -1,11 +1,10 @@
 // models/jobApplicationModel.js
-
 const mongoose = require("mongoose");
 
 const jobApplicationSchema = new mongoose.Schema({
   jobId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Job",
+    ref: "Job", // Assuming Job is another model
     required: true,
   },
   applicantEmail: {
@@ -17,7 +16,7 @@ const jobApplicationSchema = new mongoose.Schema({
     required: true,
   },
   cv: {
-    type: String, // URL or path to the CV
+    type: String, // Store filename or URL of the uploaded CV
     required: true,
   },
   phoneNumber: {
@@ -25,7 +24,7 @@ const jobApplicationSchema = new mongoose.Schema({
     required: true,
   },
   coverLetter: {
-    type: String,
+    type: String, // Store filename or URL of the uploaded cover letter
   },
   status: {
     type: String,

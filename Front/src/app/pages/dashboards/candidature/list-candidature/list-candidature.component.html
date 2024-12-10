@@ -1,1 +1,46 @@
-<p>list-candidature works!</p>
+
+<div class="row">
+    <div class="col-lg-12  d-flex justify-content-end">
+      <button mat-stroked-button color="primary" class="btn-custom"  [routerLink]="['/dashboards/addApplication']">
+        Ajouter Candidature
+      </button>
+    </div>
+
+<div class="container mt-4">
+    <h2>Job Applications</h2>
+    <table class="table table-bordered table-hover mt-3">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Job ID</th>
+          <th>Applicant Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>CV</th>
+          <th>Cover Letter</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of applications; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ app.jobId }}</td>
+          <td>{{ app.applicantName }}</td>
+          <td>{{ app.applicantEmail }}</td>
+          <td>{{ app.phoneNumber }}</td>
+          <td><a [href]="app.cv" target="_blank">Download CV</a></td>
+          <td>
+            <a *ngIf="app.coverLetter" [href]="app.coverLetter" target="_blank">
+              Download Cover Letter
+            </a>
+            <span *ngIf="!app.coverLetter">N/A</span>
+          </td>
+          <td>{{ app.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+  

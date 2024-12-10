@@ -10,6 +10,7 @@ import { ListMatchmakingComponent } from './matchmaking/list-matchmaking/list-ma
 import { ListTestsComponent } from './tests/list-tests/list-tests.component';
 import { AddJobComponent } from './jobs/add-job/add-job.component';
 import { EditJobComponent } from './jobs/edit-job/edit-job.component';
+import { AddCandidatureComponent } from './candidature/add-candidature/add-candidature.component';
 
 export const DashboardsRoutes: Routes = [
   {
@@ -71,6 +72,16 @@ export const DashboardsRoutes: Routes = [
           ],
         },
       },
+      {path: 'addApplication',
+      component: AddCandidatureComponent,
+      data: {
+        title: 'Ajouter Candidature',
+        urls: [
+          { title: 'Job-Genie', url: '/dashboards/addApplication' },
+          // { title: 'Liste des Emplois' },
+        ],
+      },
+    },
       {
         path: 'candidature',
         component: ListCandidatureComponent,
@@ -82,6 +93,7 @@ export const DashboardsRoutes: Routes = [
           ],
         },
       },
+      
       {
         path: 'interviews',
         component: ListInterviewsComponent,

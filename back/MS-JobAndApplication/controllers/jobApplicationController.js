@@ -12,11 +12,14 @@ exports.addApplication = [
   async (req, res) => {
     try {
       const { jobId, applicantEmail, applicantName, phoneNumber } = req.body;
-      const cv = req.files["cv"][0].filename;
+
+      // Get file paths for CV and Cover Letter
+      const cv = req.files["cv"] ? req.files["cv"][0].filename : "";
       const coverLetter = req.files["coverLetter"]
         ? req.files["coverLetter"][0].filename
         : "";
 
+      // Create a new job application
       const newApplication = new JOBApplication({
         jobId,
         applicantEmail,
@@ -27,15 +30,13 @@ exports.addApplication = [
       });
 
       await newApplication.save();
-      //envoi un mail pour le user
-      //application f job x est bien récu
-      res.status(201).json(newApplication);
+
+      res.status(201).json(newApplication); // Successfully created application
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({ error: err.message }); // Handle errors
     }
   },
 ];
-
 // Obtenir toutes les applications
 exports.getAllApplications = async (req, res) => {
   try {

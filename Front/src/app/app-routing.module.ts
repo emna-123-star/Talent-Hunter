@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { AppSideRegisterComponent } from './pages/authentication/side-register/side-register.component';
+import { AppSideLoginComponent } from './pages/authentication/side-login/side-login.component';
 
 const routes: Routes = [
+  { path: 'register', component: AppSideRegisterComponent },
+  { path: 'login', component: AppSideLoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: '',
     component: FullComponent,
